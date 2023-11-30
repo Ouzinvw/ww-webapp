@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import NavBar from './components/NavBar';
 import About from './components/About';
+import EditProfile from './components/EditProfile';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <div className="App">
       <NavBar />
         <Routes>
+          <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />

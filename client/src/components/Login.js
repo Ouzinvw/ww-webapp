@@ -37,7 +37,7 @@ const Login = ({ onLogin }) => {
     <div className="container mt-5">
         <div className='offset-md-3 col-md-6 col-sm-12'>
             <h1 class="text-center text-primary fw-bold">WeatherWear login</h1>
-            <p class="text-center">Please enter your account information.</p>
+            <p class="lead text-center">Please enter your account information.</p>
             <Form>
             <Form.Group controlId="formBasicUsername">
               <Form.Control className='my-2' type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
