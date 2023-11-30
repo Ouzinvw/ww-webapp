@@ -4,15 +4,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config({ path: '../.env' })
 
 const User = require('./models/userModel.js');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-console.log('Port loaded: '+process.env.PORT);
-
-const mongoURI = 'mongodb+srv://admin:rbOhM4W6RRMBF638@webapp.juhhglb.mongodb.net/?retryWrites=true&w=majority';
+const mongoURI = process.env.MONGO_URI;
 
 // Connect to MongoDB
 mongoose.connect(mongoURI)
@@ -26,15 +25,12 @@ const authenticateToken = async (req, res, next) => {
   if (!token) {
     return res.status(401).json({ error: 'Unauthorized: Missing token' });
   }
-
   try {
     const decoded = jwt.verify(token, 'your_secret_key');
     const user = await User.findOne({ username: decoded.username });
-
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-
     req.user = user;
     next();
   } catch (error) {
@@ -54,7 +50,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.get('/api/get-user-data', authenticateToken, async (req, res) => {
   const username = req.user.username;
   const userData = await User.findOne({ username });
-  console.log('Populating user data for:', { username });
+  console.log('Getting user field data for:', { username });
   
   try {
     if (!userData) {
@@ -79,7 +75,7 @@ app.get('/api/dashboard', authenticateToken, async (req, res) => {
     try {
       const username = req.user.username;
       const userData = await User.findOne({ username });
-      console.log('Loading dashboard for user:', { username });
+      console.log('Getting dashboard for user:', { username });
   
       if (!userData) {
         return res.status(404).json({ error: 'User not found' });
@@ -98,7 +94,7 @@ app.get('/api/dashboard', authenticateToken, async (req, res) => {
 // Update user
 app.put('/api/edit-profile', authenticateToken, async (req, res) => {
   const { name, email, occupation } = req.body;
-  console.log('Attempting to update user');
+  console.log('Recieved profile update request:', name, email, occupation);
 
   try {
     const user = req.user;
@@ -119,6 +115,7 @@ app.put('/api/edit-profile', authenticateToken, async (req, res) => {
 // Register user
 app.post('/api/register', async (req, res) => {
   const { username, password, name, email, occupation } = req.body;
+  console.log('Received registration request:', { username, password, name, email, occupation});
 
   try {
     const existingUser = await User.findOne({ username });
@@ -143,6 +140,7 @@ app.post('/api/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   console.log('Received login request:', { username, password });
+
   try {
     const user = await User.findOne({ username });
     if (!user) {
