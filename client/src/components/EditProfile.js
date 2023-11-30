@@ -69,12 +69,16 @@ const EditProfile = () => {
     }
   };
 
+  const btnSpacing = {
+    margin: '5px'
+  }
+
   return (
     <div className="container mt-5">
       <div className='offset-md-3 col-md-6 col-sm-12'>
         <h1 className="text-center text-primary fw-bold">Update your profile</h1>
         <p className='lead text-center'>You may only update your personal information, username and password are static. If you wish to change your username or password, you may create a new account&nbsp;
-        <Link to="/register">
+        <Link to="/register" className='text-decoration-none'>
         <a>here.</a>
         </Link>
         </p>
@@ -89,8 +93,11 @@ const EditProfile = () => {
             <Form.Control className='my-2' type="text" placeholder="Occupation" value={occupation} onChange={(e) => setOccupation(e.target.value)} />
           </Form.Group>
           <div className='d-flex justify-content-center'>
-            <Button className='btn btn-primary btn-md' onClick={handleUpdateProfile} disabled={loading}>
+            <Button style={btnSpacing} className='btn btn-primary btn-md' onClick={handleUpdateProfile} disabled={loading}>
               {loading ? 'Updating...' : 'Update Profile'}
+            </Button>
+            <Button style={btnSpacing} variant='outline-primary' onClick={() => navigate('/dashboard')}>
+              Back to dashboard
             </Button>
           </div>
           <hr/>
