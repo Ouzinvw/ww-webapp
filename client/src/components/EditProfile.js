@@ -77,7 +77,7 @@ const EditProfile = () => {
     <div className="container mt-5">
       <div className='offset-md-3 col-md-6 col-sm-12'>
         <h1 className="text-center text-primary fw-bold">Update your profile</h1>
-        <p className='lead text-center'>You may only update your personal information, username and password are static. If you wish to change your username or password, you may create a new account&nbsp;
+        <p className='lead text-center'>You may only update your personal information, if you wish to change your username or password, you may create a new account&nbsp;
         <Link to="/register" className='text-decoration-none'>
         <a>here.</a>
         </Link>
